@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="proofs/spine-banner.png" alt="SPINE Banner" width="100%">
+</p>
+
+<br>
+
 # SPINE - Spiking Python-Integrated Neural Engine
 
 [![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
