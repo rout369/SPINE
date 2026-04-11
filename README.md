@@ -1,9 +1,6 @@
-# 📄 SPINE - Final README.md with PyTorch Benchmark
-
-```markdown
 # SPINE - Spiking Python-Integrated Neural Engine
 
-[![C++](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/)
+[![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
 [![Python](https://img.shields.io/badge/Python-3.7+-green.svg)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Build](https://img.shields.io/badge/Build-CMake-blue.svg)](https://cmake.org)
@@ -69,7 +66,7 @@ Unlike PyTorch or TensorFlow, SPINE has **zero dependencies** and **no black box
 | Final Accuracy | 94.49% |
 | Training Time | ~10-12 minutes |
 | Memory Usage | ~500 MB |
-| Loss Reduction | 72.1% (0.0558 → 0.0156) |
+| Loss Reduction | 72.1% (0.0558 -> 0.0156) |
 
 ---
 
@@ -86,7 +83,7 @@ Unlike PyTorch or TensorFlow, SPINE has **zero dependencies** and **no black box
 | Test samples | 10,000 |
 | Epochs | 20 |
 | Batch size | 32 |
-| Architecture | 784 → 256 → 128 → 10 |
+| Architecture | 784 -> 256 -> 128 -> 10 |
 | Activation | ReLU |
 | Optimizer | SGD |
 | Learning rate | 0.01 (decayed to 0.005 at epoch 10) |
@@ -99,6 +96,8 @@ Unlike PyTorch or TensorFlow, SPINE has **zero dependencies** and **no black box
 | PyTorch | 93.82% | 0.1962 |
 
 **SPINE achieved 0.67% higher accuracy in this specific run.**
+
+![Comparison Benchmark](proofs/spine_vs_pytorch_dashboard.png)
 
 ### Important Disclaimers
 
@@ -130,7 +129,7 @@ Unlike PyTorch or TensorFlow, SPINE has **zero dependencies** and **no black box
 
 ### The Real Takeaway
 
-> **SPINE proves that understanding deep learning from first principles is possible. PyTorch proves that production-ready frameworks require teams, funding, and years of optimization.**
+> **SPINE is a learning experiment - my attempt to understand what happens under the hood of neural networks. It is not production-ready. PyTorch is the industry standard with GPU acceleration, deployment tools, and decades of engineering. Use SPINE to learn. Use PyTorch to build.**
 
 Both have their place. Use PyTorch for research and production. Use SPINE to learn how it all works.
 
@@ -142,7 +141,7 @@ Both have their place. Use PyTorch for research and production. Use SPINE to lea
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/spine.git
+git clone https://github.com/rout369/spine.git
 cd spine
 
 # Build C++ core
@@ -167,18 +166,16 @@ from spine import Tensor, Linear, SGD, mse_loss, relu
 # Create tensors
 A = sp.ones([2, 3])
 B = sp.randn([3, 4], 0.0, 1.0)
-C = A.matmul(B)  # Matrix multiplication
+C = A.matmul(B)
 
 # Build neural network
 layer1 = Linear(784, 256)
 layer2 = Linear(256, 128)
 layer3 = Linear(128, 10)
 
-# Training loop
 optimizer = SGD(layer1.parameters() + layer2.parameters() + layer3.parameters(), lr=0.01)
 
 for epoch in range(20):
-    # Forward pass
     h1 = relu(layer1(x))
     h2 = relu(layer2(h1))
     pred = layer3(h2)
@@ -191,7 +188,7 @@ for epoch in range(20):
 # Simulate spiking neurons
 neuron = sp.LIFNeuron(tau_mem=20.0, tau_syn=5.0, dt=1.0)
 for t in range(100):
-    spike = neuron.update(20.0)  # 20 nA input
+    spike = neuron.update(20.0)
 ```
 
 ---
@@ -201,61 +198,32 @@ for t in range(100):
 ```
 spine/
 ├── include/
-│   ├── tensor.h          # Tensor operations
-│   ├── lif.h             # LIF neuron/layer
-│   └── linear.h          # Linear layer
+│   ├── tensor.h
+│   ├── lif.h
+│   └── linear.h
 ├── src/
-│   ├── tensor.cpp        # Tensor implementation
-│   ├── lif.cpp           # LIF implementation
-│   └── linear.cpp        # Linear layer
+│   ├── tensor.cpp
+│   ├── lif.cpp
+│   └── linear.cpp
 ├── python/
-│   └── bindings.cpp      # Pybind11 bindings
-├── spine/
-│   ├── __init__.py
-│   └── autograd.py       # Automatic differentiation
-├── examples/
-│   ├── mnist_dataloader.py   # MNIST data loader
-│   └── train_mnist.py        # Training script
+│   └── bindings.cpp
+├── proofs/                    # Images as proofs 
+│ 
 ├── tests/
-│   └── test.py           # Test suite
-└── CMakeLists.txt        # Build configuration
+│   └── test.py
+├──  CMakeLists.txt
+├──  Autograd.py
+├──  mnist_dataloader.py
+├──  train_mnist.py
+├──  pytorch_test.py
+└──  README.md
 ```
 
 ---
 
 ## Training Progress Example
 
-```
-============================================================
-MNIST Training with SPINE
-============================================================
-
-📥 Loading MNIST data...
-Training data: 20000 samples
-Test data: 10000 samples
-
-🏗️ Building model...
-
-🏋️ Training...
-Epoch   Loss            Progress
---------------------------------------------------
-  1     0.055781        89.0% ████████████████████████████████████████████
-  2     0.036266
-  3     0.030490
-  4     0.027045
-  5     0.024687
-  6     0.022919        96.0% ████████████████████████████████████████████████
- 10     0.018644
- 11     0.017993        98.5% █████████████████████████████████████████████████
- 15     0.016769
- 20     0.015565        98.5% █████████████████████████████████████████████████
-
-✅ Training complete!
-
-📊 Final Evaluation on 10,000 test images...
-
-🎯 Final Test Accuracy: 94.49%
-```
+![Spine Performance](proofs/spine_perfromence.png)
 
 ---
 
@@ -334,17 +302,6 @@ pip install -e .
 
 ---
 
-## Contributing
-
-Contributions welcome! Areas to help:
-- Performance optimizations
-- Additional neuron models
-- Documentation improvements
-- Test coverage
-- Bug fixes
-
----
-
 ## License
 
 MIT License - Free for everyone. Use it, modify it, share it. See [LICENSE](LICENSE) file for details.
@@ -353,13 +310,13 @@ MIT License - Free for everyone. Use it, modify it, share it. See [LICENSE](LICE
 
 ## Why SPINE?
 
-| Feature | SPINE | PyTorch | TensorFlow |
-|---------|-------|---------|------------|
-| Built from scratch | ✅ | ❌ | ❌ |
-| Zero dependencies | ✅ | ❌ (500MB+) | ❌ |
-| Understandable codebase | ✅ | ❌ | ❌ |
-| Biological neurons | ✅ | ❌ | ❌ |
-| Transparent autograd | ✅ | ❌ | ❌ |
+| Feature | SPINE | PyTorch |
+|---------|-------|---------|
+| Built from scratch | Yes | No |
+| Zero dependencies | Yes | No (500MB+) | 
+| Understandable codebase | Yes | No |
+| Biological neurons | Yes | No |
+| Transparent autograd | Yes | No |
 
 **SPINE prioritizes understanding and transparency over feature completeness.**
 
@@ -371,10 +328,10 @@ If you use SPINE in research, please cite:
 
 ```bibtex
 @software{spine_framework,
-  author = {Your Name},
+  author = {Biswajit Rout},
   title = {SPINE: Spiking Python-Integrated Neural Engine},
-  year = {2024},
-  url = {https://github.com/yourusername/spine}
+  year = {2026},
+  url = {https://github.com/rout369/SPINE}
 }
 ```
 
@@ -382,7 +339,8 @@ If you use SPINE in research, please cite:
 
 ## Acknowledgments
 
-- Inspired by the SpiNNaker neuromorphic hardware project at University of Manchester
+- Inspired by the **SpiNNaker** neuromorphic hardware project at University of Manchester
+- **PyTorch** The gold standard that inspired this learning project. SPINE exists because PyTorch showed what excellence looks like.
 - Built with pybind11 for seamless C++/Python integration
 - MNIST dataset from Yann LeCun, Corinna Cortes, Christopher J.C. Burges
 
@@ -401,25 +359,20 @@ SPINE is a **learning project** that demonstrates:
 
 ---
 
-## Star History
+<div align="center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/spine&type=Date)](https://star-history.com/#yourusername/spine&Date)
+*Built from scratch. No black boxes. Just spikes and gradients.*
 
----
+<br>
 
-**Built from scratch. No black boxes. Just spikes and gradients.**
+Made with
 
-Made with C++ and Python
-```
+![C++](https://img.shields.io/badge/C++-00599C?logo=cplusplus&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Tensor](https://img.shields.io/badge/Tensor-Engine-FF6F00?logo=tensorflow&logoColor=white)
 
----
+<br>
 
-## Key Additions for Cautious PyTorch Comparison
+**SPINE** — *Understanding deep learning, one line of code at a time.*
 
-1. **Disclaimer section** - Clear that this is educational, not production
-2. **Important Disclaimers** - Lists limitations of the comparison
-3. **Why PyTorch is Still Superior** - Honest assessment
-4. **The Real Takeaway** - Proper context for the results
-5. **Educational focus** - Emphasizes learning over competition
-
-This README is **honest, professional, and impressive** without overpromising or misleading. 🚀
+</div>
