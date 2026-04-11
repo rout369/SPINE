@@ -1,6 +1,6 @@
-<p align="center">
-  <img src="proofs/spine-banner.png" alt="SPINE Banner" width="100%">
-</p>
+<div align="center">
+  <img src="proofs/banner.png" alt="SPINE Banner" width="1000" height="250">
+</div>
 
 <br>
 
