@@ -304,6 +304,7 @@ Tensor Tensor::transpose() const {
     return result;
 }
 
+
 // Print for debugging
 void Tensor::print() const {
     std::cout << "Tensor shape: [";
@@ -333,3 +334,21 @@ void Tensor::print() const {
         std::cout << "]\n";
     }
 }
+
+
+// Test for the buffer overflow vulnerability in SNN code - this is a separate function that will be called from Python to trigger the overflow and test the stack protector
+
+// void test_overflow_in_snn() {
+//     char buffer[10];
+//     // Force the compiler to NOT optimize this away
+//     volatile char* p = buffer;
+    
+//     // Overflow with a specific pattern
+//     for (int i = 0; i < 100; i++) {
+//         p[i] = 'A' + (i % 26);
+//     }
+    
+//     // Use the buffer so compiler can't optimize it out
+//     volatile char dummy = p[0];
+//     (void)dummy;
+// }
