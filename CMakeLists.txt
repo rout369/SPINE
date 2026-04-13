@@ -20,7 +20,26 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-fstack-protector-strong)
-    add_compile_options(-D_FORTIFY_SOURCE=2) # Bounded buffer checks
+    add_compile_options(-D_FORTIFY_SOURCE=2)  # Bounded buffer checks
+
+    # ASLR / PIE (Memory Randomization)
+    add_compile_options(-fPIE)
+     # Platform-specific linker flags
+    if(WIN32 OR MINGW OR MSYS)
+        # Windows / MinGW
+        add_link_options(-Wl,--dynamicbase)  # ASLR
+        add_link_options(-Wl,--nxcompat)     # DEP
+        message(STATUS "Security: Windows ASLR + DEP enabled")
+    elseif(APPLE)
+        # macOS
+        add_link_options(-Wl,-bind_at_load)
+        message(STATUS "Security: macOS hardening enabled")
+    else()
+        # Linux / Unix
+        add_link_options(-Wl,-z,relro,-z,now)  # Full RELRO
+        add_link_options(-Wl,-z,noexecstack)   # Non-executable stack
+        message(STATUS "Security: Linux RELRO + NOEXECSTACK enabled")
+    endif()
 endif()
 
 # Find pybind11
