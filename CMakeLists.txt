@@ -20,7 +20,7 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-fstack-protector-strong)
-    add_compile_options(-D_FORTIFY_SOURCE=2)
+    add_compile_options(-D_FORTIFY_SOURCE=2) # Bounded buffer checks
 endif()
 
 # Find pybind11
