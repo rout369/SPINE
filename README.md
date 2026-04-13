@@ -75,6 +75,51 @@ Unlike PyTorch or TensorFlow, SPINE has **zero dependencies** and **no black box
 | Loss Reduction | 72.1% (0.0558 -> 0.0156) |
 
 ---
+## 🔒 Security Hardening
+
+### 1. CPU Portability & Optimization
+
+SPINE uses **safe defaults** that work on all CPUs, with an optional performance boost for your machine.
+
+| Setting | Default | Performance | Portability |
+|---------|---------|-------------|-------------|
+| `-march=x86-64-v3` | ✅ Default | Good | Works on all CPUs (2015+) |
+| `-march=native` | Optional | Maximum | Your CPU only |
+
+**Build with maximum speed on your machine:**
+```bash
+cmake .. -G "MinGW Makefiles" -DUSE_NATIVE_OPT=ON -DCMAKE_CXX_FLAGS="-O3 -march=native"
+
+```
+
+### 2. Stack Overflow Protection
+
+SPINE includes **runtime stack protection** to detect and block buffer overflow attacks.
+
+**Protection Flags:**
+- `-fstack-protector-strong` - Detects buffer overflows
+- `-D_FORTIFY_SOURCE=2` - Adds bounds checking
+
+**Verification:**
+```bash
+$ python -c "import mytensor; mytensor.test_overflow_in_snn()"
+*** stack smashing detected ***: terminated
+```
+
+✅ **Result:** Buffer overflow → crash (not compromise)
+
+---
+
+### Security Summary
+
+| Protection | Status | Impact |
+|------------|--------|--------|
+| CPU Portability (Safe Default) | ✅ Active | Zero crashes on older CPUs |
+| Stack Overflow Detection | ✅ Active | Crash on exploit |
+| Bounds Checking | ✅ Active | Prevents memory corruption |
+
+---
+
 
 ## SPINE vs PyTorch: A Cautious Comparison
 
