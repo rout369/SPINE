@@ -106,7 +106,51 @@ $ python -c "import mytensor; mytensor.test_overflow_in_snn()"
 *** stack smashing detected ***: terminated
 ```
 
-✅ **Result:** Buffer overflow → crash (not compromise)
+**Result:** Buffer overflow → crash (not compromise)
+
+### 3. ASLR / Memory Randomization
+
+SPINE enables **Address Space Layout Randomization (ASLR)** to prevent memory address prediction attacks.
+
+**Verification:**
+```bash
+$ python -c "import mytensor; print(hex(id(mytensor.Tensor)))"
+0x2d74601fa40  # Run 1
+0x191f9763bd0  # Run 2 (different address!)
+0x1f6a1225c40  # Run 3 (different address!)
+
+                 or
+
+$ grep "fPIE" CMakeFiles/mytensor.dir/flags.make
+CXX_FLAGS = -O3 -march=native -O3 -march=native -std=gnu++17 -fvisibility=hidden -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fPIE
+```
+
+**Result:** Tensor class loads at different memory addresses on each run
+
+---
+
+### Platform-Specific Build Commands
+
+**Windows (MSYS2/MinGW):**
+```bash
+mkdir build && cd build
+cmake -G "MinGW Makefiles" ..
+mingw32-make -j4
+```
+
+**Linux:**
+```bash
+mkdir build && cd build
+cmake ..
+make -j4
+```
+
+**macOS:**
+```bash
+mkdir build && cd build
+cmake ..
+make -j4
+```
 
 ---
 
@@ -117,9 +161,9 @@ $ python -c "import mytensor; mytensor.test_overflow_in_snn()"
 | CPU Portability (Safe Default) | ✅ Active | Zero crashes on older CPUs |
 | Stack Overflow Detection | ✅ Active | Crash on exploit |
 | Bounds Checking | ✅ Active | Prevents memory corruption |
+| ASLR / PIE | ✅ Active | Random memory addresses |
 
 ---
-
 
 ## SPINE vs PyTorch: A Cautious Comparison
 
