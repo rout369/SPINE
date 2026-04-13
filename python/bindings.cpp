@@ -5,7 +5,10 @@
 #include "lif.h"
 #include "linear.h"
 
+
 namespace py = pybind11;
+
+// void test_overflow_in_snn();
 
 PYBIND11_MODULE(mytensor, m) {
     m.doc() = "Custom tensor library for SNN project";
@@ -122,4 +125,6 @@ PYBIND11_MODULE(mytensor, m) {
         t.zeros();
         return t;
     });
+
+    // m.def("test_overflow_in_snn", &test_overflow_in_snn, "Test function that forces buffer overflow");
 }
